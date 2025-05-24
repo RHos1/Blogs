@@ -1,0 +1,27 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "Blog"
+  ],
+  "homepage": "https://github.com/RHos1/Blogs#readme",
+  "bugs": {
+    "url": "https://github.com/RHos1/Blogs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RHos1/Blogs.git"
+  },
+  "license": "ISC",
+  "author": "Rechad Hossaini",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express.js": "^1.0.0",
+    "node.js": "^0.0.1-security"
+  }
+}

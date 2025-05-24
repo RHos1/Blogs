@@ -13,6 +13,16 @@ const client = new Client({
 });
 
 app.listen(8000, () => {
-    console.log('Running on port 8080');
+    console.log('Running on port 8000');
 })
 
+
+client 
+  .connect()
+  .then(() => {
+    console.log("Connected to PostgresSQL database");
+  })
+  
+  .catch((err)=> {
+    console.error("Error connecting to PostgresSQL database ", err)
+  })

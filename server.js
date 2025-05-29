@@ -1,28 +1,30 @@
 import express from 'express'
-import {Client}from "pg";
-import dotenv from 'dotenv';
+import {insertPost} from './Project/db/postgre.js';
 const app = express();
-dotenv.config();
 app.use(express.json());
-const client = new Client({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    port: Number(process.env.DB_PORT),
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-});
+
+
+app.post('/addBlog', async (req,res)=> {
+    if (!req.body){
+        res.status(500).send('There appears to be some error with this connection');
+    }
+
+    try{
+        const {data} = req.body
+        const result = await insertPost(data);
+        res.status(200).send("Data was added to database successfully")
+        return result.row;
+    }catch(err){
+        console.error("There was an error with that request",err);
+        res.status(500).send("Error with that request")
+
+    }
+})
 
 app.listen(8000, () => {
     console.log('Running on port 8000');
 })
 
 
-client 
-  .connect()
-  .then(() => {
-    console.log("Connected to PostgresSQL database");
-  })
-  
-  .catch((err)=> {
-    console.error("Error connecting to PostgresSQL database ", err)
-  })
+
+

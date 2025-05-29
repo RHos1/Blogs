@@ -23,3 +23,21 @@ export async function insertPost(value) {
     }
    
 }
+export async function getPosts(){
+    try{
+        const response = await client.query("SELECT * FROM test");
+        return response.rows;
+    }catch(err){
+        throw err;
+
+    }
+}
+
+export async function searchBlog(search){
+    try{
+        const response = await client.query("SELECT * FROM test where blog_text LIKE $1",[`%${search}%`]);
+        return response.rows;
+    }catch(err){
+        throw err;
+    }
+}

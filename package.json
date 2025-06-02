@@ -1,7 +1,10 @@
 {
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.8",
+    "dotconfig": "^0.0.1-security",
+    "dotenv": "^16.5.0",
     "postcss": "^8.5.4",
+    "postgres": "^3.4.7",
     "swiper": "^11.2.8",
     "tailwindcss": "^4.1.8"
   }

@@ -11,3 +11,16 @@ const client = new Client({
 
 await client.connect()
 console.log("Postgres Connected");
+
+export default async function addBlog(title,content,image){
+    try{
+        const row = await client.query("INSERT INTO blogs (title,blog_content,image) VALUES($1,$2,$3)", [title,content,image]);
+        return row.rows;
+
+    }catch(err){
+        throw err;
+
+    }
+
+
+}

@@ -1,10 +1,10 @@
 import Image from "next/image";
-
+import Link from 'next/link';
+import Navigation from './Components/navigation';
 export default function Home() {
-  return (
+  return (<>
+    <Navigation />
     <section className="flex flex-col">
-    <h1 className="text-3*1 font-bold underline">Welcome to my blogpage</h1>
-    <h1 className="text-3*1 font-bold underline">How are you doing</h1>
     </section>
-  );
+    </>);
 }

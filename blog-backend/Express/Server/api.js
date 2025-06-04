@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors'; 
-import {addBlog,getBlog} from '../Database/postgres.js'
+import {addBlog,getBlog,addUser} from '../Database/postgres.js'
 
 const app = express();
 app.use(express.json());
@@ -34,6 +34,20 @@ app.get('/getBlogs', async (req,res) => {
     }
 })
 
+app.post('/Register', async (req,res) => {
+    if(!req.body){
+        return res.status(500).send('Error with the database')
+    }
+    try{
+        const {username,password} = req.body;
+        const result = await addUser(username,password);
+        return res.status(200).send("User successfully registered!")
+    }catch(err){ 
+        console.error("There was an error registering this user!",err);
+        res.status(500).send("There was an issue with registering this user.")
+
+    }
+})
 
 
 

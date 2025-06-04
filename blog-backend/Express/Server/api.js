@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors'; 
-import {addBlog} from '../Database/postgres.js'
+import {addBlog,getBlog} from '../Database/postgres.js'
 
 const app = express();
 app.use(express.json());
@@ -22,6 +22,17 @@ app.post('/addBlog', async (req,res) => {
     }
 })
 
+app.get('/getBlogs', async (req,res) => {
+    try{
+        const data = await getBlog();
+        res.status(200).json(data);
+
+    }catch(err){
+        console.error('There appears to be an error with retrieving blogs',err);
+        res.status(500).send('Error with retrieving blogs please try again')
+
+    }
+})
 
 
 

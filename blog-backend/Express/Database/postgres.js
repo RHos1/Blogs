@@ -29,3 +29,12 @@ export async function addBlog(title,content,image){
 
 
 }
+
+export async function getBlog(){
+    try{
+        const row = await client.query("SELECT * FROM blogs");
+        return row.rows;
+    }catch(err){
+        throw err;
+    }
+}

@@ -1,19 +1,29 @@
 {
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.8",
+    "axios": "^1.9.0",
     "dotconfig": "^0.0.1-security",
     "dotenv": "^16.5.0",
+    "next": "^15.3.3",
     "postcss": "^8.5.4",
     "postgres": "^3.4.7",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "swiper": "^11.2.8",
     "tailwindcss": "^4.1.8"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "@types/node": "22.15.29",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "concurrently": "^9.1.2",
+    "install": "^0.13.0",
+    "npm": "^11.4.1",
+    "typescript": "^5.8.3"
   },
   "scripts": {
-  "dev:frontend": "next dev",
-  "dev:backend": "node blog-backend/Express/Server/api.js",
-  "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\""
-}
+    "dev:frontend": "next dev",
+    "dev:backend": "node blog-backend/Express/Server/api.js",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\""
+  }
 }

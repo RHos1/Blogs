@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors'; 
-import {addBlog,getBlog,addUser} from '../Database/postgres.js'
+import {addBlog,getBlog,addUser,findUser} from '../Database/postgres.js'
 
 const app = express();
 app.use(express.json());
@@ -49,6 +49,27 @@ app.post('/Register', async (req,res) => {
     }
 })
 
+
+app.post('/Login', async (req,res) => {
+    if (!req.body){
+        res.status(500).send('There appears to be an error with the database connection');
+    }
+    try{
+        const {username,password} = req.body;
+        const user = await findUser(username,password);
+        if (!user){
+            res.status(401).send('Password or username is wrong');
+        }
+        else{
+            res.status(200).json({message: "User sucessfully found", user})
+        }
+       
+
+    }catch(err){
+        res.status(500).send('There appears to be an error with finding that user');
+
+    }
+})
 
 
 

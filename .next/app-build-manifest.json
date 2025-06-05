@@ -11,15 +11,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
-    "/dashboard/blogs/page": [
+    "/dashboard/addBlog/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/blogs/page.js"
-    ],
-    "/dashboard/testPage/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/testPage/page.js"
+      "static/chunks/app/dashboard/addBlog/page.js"
     ],
     "/dashboard/Register/page": [
       "static/chunks/webpack.js",

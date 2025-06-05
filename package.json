@@ -2,6 +2,7 @@
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.8",
     "axios": "^1.9.0",
+    "bcrypt": "^6.0.0",
     "dotconfig": "^0.0.1-security",
     "dotenv": "^16.5.0",
     "next": "^15.3.3",

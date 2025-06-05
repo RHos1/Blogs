@@ -2,6 +2,7 @@ import {Client} from "pg";
 import dotenv from 'dotenv'; 
 import { fileURLToPath} from 'url';
 import path from 'path';
+import bcrypt from 'bcrypt';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -34,6 +35,30 @@ export async function getBlog(){
     try{
         const row = await client.query("SELECT * FROM blogs");
         return row.rows;
+    }catch(err){
+        throw err;
+    }
+}
+
+export async function addUser(username,password){
+    try{
+        const hashedpassword = await bcrypt.hash(password,10);
+        const row = await client.query("INSERT INTO users (username,passwordh) VALUES($1,$2)", [username,hashedpassword]);
+        return row.rows;
+    }catch(err){
+        throw err;
+    }
+}
+
+export async function findUser(username,password){
+    try{
+        const result = await client.query("SELECT * FROM users WHERE username = $1", [username]);
+        if (result.rows.length === 0){
+            return false;
+        }
+        const user = result.rows[0];
+        const ismatch = await bcrypt.compare(password,user.passwordh)
+        return ismatch ? user: false;
     }catch(err){
         throw err;
     }

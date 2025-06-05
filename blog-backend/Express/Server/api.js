@@ -61,7 +61,7 @@ app.post('/Login', async (req,res) => {
             res.status(401).send('Password or username is wrong');
         }
         else{
-            res.status(200).json({message: "User sucessfully found", user})
+            res.status(200).json({message: "User sucessfully found"})
         }
        
 

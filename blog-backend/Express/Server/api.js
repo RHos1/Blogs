@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors'; 
-import {addBlog,getBlog,addUser,findUser} from '../Database/postgres.js'
+import {addBlog,getBlog,addUser,findUser,findBlog,renderBlog} from '../Database/postgres.js'
 
 const app = express();
 app.use(express.json());
@@ -71,7 +71,42 @@ app.post('/Login', async (req,res) => {
     }
 })
 
+app.post('/searchBlogs', async(req,res) => {
+    try{
+        const {query} = req.body;
+        const response = await findBlog(query);
+        console.log(JSON.stringify(response));
+        res.status(200).json(response);
+        
+    }catch(err){
+        console.error("There appears to be an issue with that search",err)
+        res.status(500).send("There appears to be an error with that search request")
+    }
+    
+    
+ 
+})
 
+app.get('/api/blogs/:id', async (req,res) => {
+
+    try{
+        const {id} = req.params;
+        const result = await renderBlog(id);
+        if (!result){
+            res.status(404).send("That blog was not found")
+    }
+        else{
+            res.status(200).json(result);
+        }
+
+
+    }catch(err){
+        console.error("There appears to be an error",err);
+        res.status(500).send("There appers to be an error here")
+
+    }
+    
+})
 
 
 

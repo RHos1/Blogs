@@ -34,14 +34,23 @@ export default function Login(){
 
     return(<>
     <Navigation />
-    <h1 className="text-3xl text-center mb-6">Login</h1>
-    <form onSubmit={handleSubmit} className='flex flex-col justify-center align-center m-auto w-40'>
-        <label htmlFor="username" className='text-xl'>username</label>
-        <input type="text" name="username" id ="username" className="border-2 w-60 h-10" value={user.username} onChange={handleChange} ></input>
-        <label htmlFor="password" className='text-xl'>password</label>
-        <input type="password" name="password" id ="password" className="border-2 w-60 h-10 mb-4" value={user.password} onChange={handleChange} ></input>
-        <button type='submit' className='rounded-3xl w-30 h-8 bg-black text-white'>Register</button>
-    </form>
+    
+    <section className="flex flex-row ml-10">
+        
+        <form onSubmit={handleSubmit} className='flex flex-col w-120'>
+        <h1 className="text-3xl  mb-6">Login</h1>
+            <label htmlFor="username" className='text-xl'>username</label>
+            <input type="text" name="username"placeholder="username" id ="username" className="pl-2 border-2 w-100 h-10 mb-4" value={user.username} onChange={handleChange} ></input>
+            <label htmlFor="password" className='text-xl'>password</label>
+            <input type="password" placeholder="password" name="password" id ="password" className="pl-2 border-2 w-100 h-10 mb-4" value={user.password} onChange={handleChange} ></input>
+            <button type='submit' className='rounded-3xl w-30 h-8 bg-black text-white'>Register</button>
+        </form>
+
+        <div className="flex flex-row">
+            <h1>Don't have an account?</h1>
+
+        </div>
+    </section>
     </>)
 
 

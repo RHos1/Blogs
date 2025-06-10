@@ -62,4 +62,32 @@ export async function findUser(username,password){
     }catch(err){
         throw err;
     }
+
+
 }
+
+export async function findBlog(query){
+    try{
+        const results = await client.query("SELECT * FROM blogs WHERE blog_content ILIKE $1 ", [`%${query}%`])
+        return results.rows;
+
+    }catch(err){
+        throw err;
+    }
+
+}
+
+export async function renderBlog(id){
+    try{
+        const result  = await client.query("SELECT * FROM blogs WHERE blog_id = $1", [id]);
+        if (result.rows.length === 0){
+            return false;
+        }
+        return result.rows[0] 
+
+
+    }catch(err){
+        throw err;
+    }
+}
+

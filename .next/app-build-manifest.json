@@ -11,20 +11,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
-    "/dashboard/testPage/page": [
+    "/dashboard/addBlog/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/testPage/page.js"
-    ],
-    "/dashboard/Register/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/Register/page.js"
-    ],
-    "/dashboard/Login/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/Login/page.js"
+      "static/chunks/app/dashboard/addBlog/page.js"
     ]
   }
 }

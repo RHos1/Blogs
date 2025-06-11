@@ -11,9 +11,9 @@ app.post('/addBlog', async (req,res) => {
         res.status(500).send('There appears to be an issue with database connection')
     }
     try{
-        const {title,content,image} = req.body;
-        console.log('Received:', {title, content, image});
-        const result = await addBlog(title,content,image);
+        const {title,content,image,category,tags} = req.body;
+        console.log('Received:', {title, content, image,category,tags});
+        const result = await addBlog(title,content,image,category,tags);
         return res.status(200).send('Blog successfully added')
     }catch(err){
         console.error('There appears to be an error with this request', err);

@@ -18,9 +18,9 @@ const client = new Client({
 await client.connect()
 console.log("Postgres Connected");
 
-export async function addBlog(title,content,image){
+export async function addBlog(title,content,image,category,tags){
     try{
-        const row = await client.query("INSERT INTO blogs (title,blog_content,image) VALUES($1,$2,$3) RETURNING *", [title,content,image]);
+        const row = await client.query("INSERT INTO blogs (title,blog_content,image,category,tags) VALUES($1,$2,$3,$4,$5) RETURNING *", [title,content,image,category,tags]);
         return row.rows;
 
     }catch(err){
@@ -79,7 +79,7 @@ export async function findBlog(query){
 
 export async function renderBlog(id){
     try{
-        const result  = await client.query("SELECT * FROM blogs WHERE blog_id = $1", [id]);
+        const result  = await client.query("SELECT * FROM blogs WHERE blog_id = $1", [Number(id)]);
         if (result.rows.length === 0){
             return false;
         }

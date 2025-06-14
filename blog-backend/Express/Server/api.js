@@ -1,10 +1,25 @@
 import express from 'express';
 import cors from 'cors'; 
 import {addBlog,getBlog,addUser,findUser,findBlog,renderBlog} from '../Database/postgres.js'
+import session from 'express-session'
+import { RESPONSE_LIMIT_DEFAULT } from 'next/dist/server/api-utils/index.js';
+
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
+app.use(session({
+    secret: 'some encryption',
+    resave: false,
+    saveUninitialized: false,
+    cookie : {
+        secure: false,
+        maxAge: 1000 * 60 * 60 * 24
+    }
+}))
 console.log('Hello from backend');
 app.post('/addBlog', async (req,res) => {
     if(!req.body){
@@ -22,6 +37,23 @@ app.post('/addBlog', async (req,res) => {
     }
 })
 
+app.get('/session', (req,res) => {
+    if (req.session.username){
+        return res.status(200).json({loggedIn: true, username: req.session.username});
+    }else{
+        return res.status(200).json({loggedIn : false});
+    }
+})
+
+app.post('/logout', (req,res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.status(500).send('Could not log out.');
+        }
+        res.clearCookie('connect.sid');
+        return res.status(200).send('Logged out successfully.');
+    });
+});
 app.get('/getBlogs', async (req,res) => {
     try{
         const data = await getBlog();
@@ -60,7 +92,17 @@ app.post('/Login', async (req,res) => {
         if (!user){
             res.status(401).send('Password or username is wrong');
         }
+        
         else{
+            req.session.username = username;
+            console.log(user.user_id);
+            req.session.userid = user.user_id;
+            req.session.save(err=> {
+                if (err) {
+                    console.error('Session save error:', err);
+                    return res.status(500).send('Failed to save session');
+                }
+            })
             res.status(200).json({message: "User sucessfully found"})
         }
        

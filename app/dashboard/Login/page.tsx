@@ -22,7 +22,8 @@ export default function Login(){
                 headers: {"Content-Type":"application/json"},
                 body: JSON.stringify({username: user.username,
                     password: user.password
-                })
+                }),
+                credentials: 'include'
             })
             const message = await response.text();
             alert(message);

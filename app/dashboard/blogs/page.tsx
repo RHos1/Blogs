@@ -18,10 +18,28 @@ type Blog ={
   created: string;
 
 }
+
+type User = {
+  loggedIn: boolean;
+  username: string;
+}
+
 export default function Page(){
 
     const[display,setDisplay] = useState(true);
     const[blogs,setBlogs] = useState<Blog[]>([]);
+    const[user,setUser] = useState<User  | null>(null);
+
+    useEffect(() => {
+      fetch('http://localhost:8000/session', {
+        credentials: 'include'
+      })
+      .then(response => response.json())
+      .then((data: User) => {
+        console.log(data)
+        setUser(data);
+      })
+    },[])
     
     useEffect(() => {
       fetch('http://localhost:8000/getBlogs')

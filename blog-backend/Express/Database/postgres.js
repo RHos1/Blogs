@@ -91,3 +91,24 @@ export async function renderBlog(id){
     }
 }
 
+export async function Favourite(blog_id,user_id){
+    try{
+        const result = await client.query("INSERT INTO favourites (blog_id,user_id) VALUES($1,$2) RETURNING *",[blog_id,user_id])
+        return result.rows;
+
+    }catch(err){
+        throw err;
+
+    }
+    
+
+}
+
+export async function getFavourites(user_id){
+    try{
+        const results = await client.query("SELECT DISTINCT FROM favourites WHERE user_id = $1",[user_id]);
+        return results.rows;
+    }catch(err){
+        throw err;
+    }
+}

@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors'; 
-import {addBlog,getBlog,addUser,findUser,findBlog,renderBlog} from '../Database/postgres.js'
+import {addBlog,getBlog,addUser,findUser,findBlog,renderBlog,Favourite,getFavourites} from '../Database/postgres.js'
 import session from 'express-session'
 import { RESPONSE_LIMIT_DEFAULT } from 'next/dist/server/api-utils/index.js';
 
@@ -39,7 +39,7 @@ app.post('/addBlog', async (req,res) => {
 
 app.get('/session', (req,res) => {
     if (req.session.username){
-        return res.status(200).json({loggedIn: true, username: req.session.username});
+        return res.status(200).json({loggedIn: true, username: req.session.username, user_id: req.session.userid});
     }else{
         return res.status(200).json({loggedIn : false});
     }
@@ -150,6 +150,35 @@ app.get('/api/blogs/:id', async (req,res) => {
     
 })
 
+app.post('/api/like', async (req,res) => {
+    try{
+        const {blog_id,user_id} = req.body
+        const content = await Favourite(blog_id,user_id);
+        return res.status(200).send('Successfully Liked a Blog!');
+         
+        
+
+    }catch(err){
+        console.error("There was an error with that request",err);
+        return res.status(500).send('Error with processing that request')
+    }
+    
+    
+})
+
+app.post('api/favourites', async(req,res) => {
+    try{
+        const{user_id} = req.body;
+        const result = await getFavourites(user_id);
+        return res.status(200).json(Array.isArray(result)? result: [result]);
+
+    }catch(err){
+        console.error('Error Occured',err);
+        res.status(500).send('Error with that file');
+
+    }
+
+})
 
 
 

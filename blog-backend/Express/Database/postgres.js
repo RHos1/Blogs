@@ -139,3 +139,13 @@ export async function getComment(blog_id){
         throw err;
     }
 }
+
+export async function getCommentNumber(blog_id){
+    try{
+        const result = await client.query("SELECT COUNT(*) FROM comments WHERE blog_id = $1",[blog_id]);
+
+    }
+    catch(error){
+        throw err; 
+    }
+}

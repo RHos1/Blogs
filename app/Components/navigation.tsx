@@ -23,15 +23,15 @@ export default function Navigator() {
     })
     },[])
     return(<section className ="flex flex-col justify-center align-center mb-20 gap-5">
-        <section className="ml-10 mt-4 flex flex-row items-center gap-2">
+        <section className="ml-10 mt-4 flex flex-row items-center gap-2 relative">
             <input type="text" placeholder="Search blogs" className="pl-4 border-2 rounded-4xl w-200 h-10"></input>
             <Link href='dashboard/Login' className="ml-4 text-xl font-[500] color-grey">Login</Link>
             <Link href='dashboard/addBlog' className="text-xl font-[500] "><button className="border-2 w-30 rounded-2xl hover: cursor-pointer">New Blog</button></Link>
             {user?.loggedIn? (<section className="flex flex-col">
                 <h1 className="text-xl font-[500] hover: cursor-pointer " onClick={()=>handleCustom()}>{user.username}
-                    {Custom && <section className="flex flex-col border-1 h-30 ">
+                    {Custom && <section className=" absolute top-full flex flex-col border-1 rounded-xl w-60 h-60">
                         <div className="w-30 h-7">
-                            <h1>Favourites</h1>
+                        <Link href="dashboard/favourites">Favourites</Link>
                         </div>
                         <div className="w-30 h-7">
                             <h1>My Blogs</h1>

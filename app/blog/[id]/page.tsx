@@ -18,6 +18,15 @@ interface Blog {
     blog_content: string;
 }
 
+type Comment =  {
+    comment_id: number;
+    blog_id: number;
+    username: string;
+    comment_text: string;
+    created_at: string;
+
+}
+
 
 interface BlogPageProps {
     params: {
@@ -25,6 +34,7 @@ interface BlogPageProps {
     };
 }
 export default function BlogPage({ params }: BlogPageProps) {
+    const [comments, setComments] = useState<Comment[]>([]);
     const [user, setUser] = useState<User| null>(null);
     const[blog, setBlog] = useState<Blog | null>(null);
     const[loading, setLoading] = useState(true);
@@ -33,8 +43,37 @@ export default function BlogPage({ params }: BlogPageProps) {
         user_id:0
     })
 
+    const[comment,setComment] = useState({
+        blog_id: 0,
+        username: "",
+        comment_text: ""
+    })
+
+    const changeComment = (e:React.ChangeEvent<any>) => {
+        setComment((prev)=> ({...prev,[e.target.name]:e.target.value}))
+    }
+
+    
+
     const handleChange  = (e:React.ChangeEvent<any>) => {
         setInfo((prev) => ({...prev,[e.target.name]:e.target.value}))
+    }
+
+    const handleComment = async(e:React.ChangeEvent<any>) => {
+        if(!user || !blog){
+            return;
+        }
+        const attempt = await fetch('http://localhost:8000/api/comment', {
+            method: "POST",
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({blog_id: blog.blog_id,
+                username: user.username,
+                comment_text: comment.comment_text
+            })
+
+        })
+        const response = await attempt.text();
+        alert(response);
     }
    
 
@@ -60,6 +99,25 @@ export default function BlogPage({ params }: BlogPageProps) {
     const handleLike = () => {
         setLike((prev)=>!prev)
     }
+    useEffect(() => {
+        async function getComments(){
+            if(!blog){
+                return;
+            }
+            const comments = await fetch('http://localhost:8000/api/comments', {
+                method: "POST",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({blog_id:blog.blog_id})
+                }
+                
+            )
+
+            const data = await comments.json();
+            setComments(data);
+
+        }
+        getComments();
+    },[blog?.blog_id]);
 
     useEffect(() => {
         async function getBlog() {
@@ -169,8 +227,29 @@ export default function BlogPage({ params }: BlogPageProps) {
                 </div>
                 <p className="text-3xl font-[400]">{blog.blog_content}</p>
 
+                <h1 className="text-3xl font-[500]">Comments</h1>
+
+                <form onSubmit={handleComment} className="flex flex-col">
+                    <input type="text" className="border-2 w-120 h-10 pl-2 mb-2" name="comment_text" onChange={changeComment} value={comment.comment_text} placeholder="Add a comment"></input>
+                    <button type="submit" className="border-2 rounded-xl w-50">Add</button>
+                </form>
+
+                {comments.map((comment)=>{
+                    return(<div key={comment.comment_id}>{comment.comment_text}</div>)
+                })}
+
+
+                <section className="flex flex-row gap-20" id="stats">
+                    <div><img className="w-10 " src="../heart (1).png"></img></div>
+                    <div><img src="../forum-icon.png" className="w-10"></img></div>
+                </section>
+
             </div>
+
+
+
             
+    
         </>
     );
 }

@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors'; 
-import {addBlog,getBlog,addUser,findUser,findBlog,renderBlog,Favourite,getFavourites} from '../Database/postgres.js'
+import {addBlog,getBlog,addUser,findUser,findBlog,renderBlog,Favourite,getFavourites,deleteBlog,addComment,getComment} from '../Database/postgres.js'
 import session from 'express-session'
 import { RESPONSE_LIMIT_DEFAULT } from 'next/dist/server/api-utils/index.js';
 
@@ -166,9 +166,9 @@ app.post('/api/like', async (req,res) => {
     
 })
 
-app.post('api/favourites', async(req,res) => {
+app.post('/api/favourites', async (req,res) => {
     try{
-        const{user_id} = req.body;
+        const {user_id} = req.body;
         const result = await getFavourites(user_id);
         return res.status(200).json(Array.isArray(result)? result: [result]);
 
@@ -180,7 +180,43 @@ app.post('api/favourites', async(req,res) => {
 
 })
 
+app.post('/api/deleteblog', async(req,res)=> {
+    try{
+        const {blog_id,user_id} = req.body;
+        const result = await deleteBlog(blog_id,user_id);
+        return res.status(200).send('Blog Successfully deleted');
+    }catch(err){
+        console.error(err);
+        return res.status(500).send('Error with deleting Blog');
+    }
+    
+})
 
+app.post('/api/comment', async(req,res) => {
+    try{
+        const {blog_id,username,comment_text} = req.body;  
+        const result = await addComment(blog_id,username,comment_text);
+        return res.status(200).send('Comment added successfully');
+
+
+    }catch(err){
+        console.error("This error occured",err);
+        return res.status(500).send('Internal Error')
+    }
+})
+
+app.post('/api/comments', async(req,res) => {
+    try{
+        const{blog_id} = req.body;
+        const comments = await getComment(blog_id);
+        console.log("Retrieved Comments");
+        return res.status(200).json(comments);
+    }catch(err){
+        console.err("This is your error", err);
+        res.status(500).send("Error with retrieving comments")
+    }
+    
+})
 
 
 

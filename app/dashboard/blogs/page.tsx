@@ -73,8 +73,8 @@ export default function Page(){
      navigation={true}
      scrollbar = {{draggable: true}}
      modules={[Navigation, Pagination, Scrollbar]}
-     className="mySwiper h-[15rem] w-[40rem]"
-     slidesPerView={2}
+     className="mySwiper h-[15rem] w-[60rem]"
+     slidesPerView={3}
      >
 
     

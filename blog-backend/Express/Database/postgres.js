@@ -106,9 +106,36 @@ export async function Favourite(blog_id,user_id){
 
 export async function getFavourites(user_id){
     try{
-        const results = await client.query("SELECT DISTINCT FROM favourites WHERE user_id = $1",[user_id]);
+        const results = await client.query("SELECT DISTINCT ON (blogs.blog_id) blogs.title,blogs.blog_content,blogs.image,blogs.category,blogs.tags,blogs.blog_id FROM blogs JOIN favourites ON favourites.blog_id = blogs.blog_id WHERE favourites.user_id = $1 ORDER BY blogs.blog_id, favourites.favourite_id DESC",[user_id]);
         return results.rows;
     }catch(err){
+        throw err;
+    }
+}
+
+export async function deleteBlog(blog_id,user_id){
+    try{
+        const results = await client.query("DELETE FROM favourites where blog_id =$1 AND user_id =$2",[blog_id,user_id]);
+    }catch(err){
+        throw err;
+    }
+}
+
+export async function addComment(blog_id,username,comment_text){
+    try{
+        const comments = await client.query("INSERT INTO comments (blog_id,username,comment_text) VALUES($1,$2,$3) RETURNING *", [blog_id,username,comment_text]);
+    }catch(error){
+        throw err;
+    }
+
+}
+
+export async function getComment(blog_id){
+    try{
+        const comments = await client.query("SELECT * FROM comments WHERE blog_id = $1",[blog_id])
+        return comments.rows;
+
+    }catch(error){
         throw err;
     }
 }

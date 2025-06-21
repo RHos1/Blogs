@@ -11,21 +11,31 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
+    "/dashboard/Login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/dashboard/Login/page.js"
+    ],
     "/dashboard/blogs/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/dashboard/blogs/page.css",
       "static/chunks/app/dashboard/blogs/page.js"
     ],
-    "/blog/[id]/page": [
+    "/dashboard/addBlog/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/blog/[id]/page.js"
+      "static/chunks/app/dashboard/addBlog/page.js"
     ],
-    "/dashboard/Login/page": [
+    "/dashboard/favourites/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/Login/page.js"
+      "static/chunks/app/dashboard/favourites/page.js"
+    ],
+    "/_not-found/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/_not-found/page.js"
     ]
   }
 }

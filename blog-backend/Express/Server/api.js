@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors'; 
-import {addBlog,getBlog,addUser,findUser,findBlog,renderBlog,Favourite,getFavourites,deleteBlog,addComment,getComment,getCommentNumber} from '../Database/postgres.js'
+import {addBlog,getBlog,addUser,findUser,findBlog,renderBlog,Favourite,getFavourites,deleteBlog,addComment,getComment,getCommentNumber,getLikes} from '../Database/postgres.js'
 import session from 'express-session'
 import { RESPONSE_LIMIT_DEFAULT } from 'next/dist/server/api-utils/index.js';
 
@@ -222,13 +222,26 @@ app.post('/api/commentsnumber', async(req,res) => {
     try{
         const{blog_id} = req.body;
         const number = await getCommentNumber(blog_id);
-        res.status(200).json(number);
+        return res.status(200).json(number);
     }catch(err){
-        console.err("Error cause",err);
+        console.error("Error cause",err);
         return res.status(500).send('Internal Error with retrieving comment number');
     }
     
 })
+
+app.post('/api/likes', async(req,res) => {
+    try{
+        const{blog_id} = req.body;
+        const likes = await getLikes(blog_id);
+        res.status(200).json(likes);
+    }
+    catch(err){
+        console.error("This is the error",err);
+        res.status(500).send("Error with retrieving like count");
+    }
+})
+
 
 
 

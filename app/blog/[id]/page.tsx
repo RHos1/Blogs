@@ -43,11 +43,54 @@ export default function BlogPage({ params }: BlogPageProps) {
         user_id:0
     })
 
+    const[likes,setLikes] = useState(0);
+
     const[comment,setComment] = useState({
         blog_id: 0,
         username: "",
         comment_text: ""
     })
+
+    const[commentno,setNo] = useState(0);
+    
+    useEffect(() => {
+        async function getCommentCount(){
+            if(!blog){
+                return;
+            }
+            const response = await fetch('http://localhost:8000/api/likes', {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({blog_id:blog.blog_id})
+            })
+            const data = await response.json();
+            setLikes(data[0].count);
+
+        }
+        getCommentCount();
+    },[blog?.blog_id]);
+
+
+
+
+
+    useEffect(()=> {
+        async function getCount(){
+            if (!blog){
+                return;
+            }
+            const response = await fetch('http://localhost:8000/api/commentsnumber', {
+                method: "POST",
+                headers: {"Content-Type":"application/json"},
+                body: JSON.stringify({blog_id: blog.blog_id}),
+            })
+            const data = await response.json();
+            const count = data[0].count;
+            setNo(count);
+            
+        }
+        getCount();
+    },[blog?.blog_id])
 
     const changeComment = (e:React.ChangeEvent<any>) => {
         setComment((prev)=> ({...prev,[e.target.name]:e.target.value}))
@@ -73,6 +116,7 @@ export default function BlogPage({ params }: BlogPageProps) {
 
         })
         const response = await attempt.text();
+        setNo((prev) => (prev = prev + 1))
         alert(response);
     }
    
@@ -97,6 +141,7 @@ export default function BlogPage({ params }: BlogPageProps) {
 
      
     const handleLike = () => {
+        setLikes((prev) => prev = prev+1)
         setLike((prev)=>!prev)
     }
     useEffect(() => {
@@ -240,8 +285,8 @@ export default function BlogPage({ params }: BlogPageProps) {
 
 
                 <section className="flex flex-row gap-20" id="stats">
-                    <div><img className="w-10 " src="../heart (1).png"></img></div>
-                    <div><img src="../forum-icon.png" className="w-10"></img></div>
+                    <div className="flex flex-row align-center gap-2"><img src="../heart (1).png" className="w-10"></img><p className="text-3xl">{likes}</p></div>
+                    <div className="flex flex-row align-center gap-2"><img src="../forum-icon.png" className="w-10"></img><p className="text-3xl">{commentno}</p></div>
                 </section>
 
             </div>

@@ -143,9 +143,19 @@ export async function getComment(blog_id){
 export async function getCommentNumber(blog_id){
     try{
         const result = await client.query("SELECT COUNT(*) FROM comments WHERE blog_id = $1",[blog_id]);
+        return result.rows;
 
     }
     catch(error){
         throw err; 
+    }
+}
+
+export async function getLikes(blog_id){
+    try{
+        const result = await client.query("SELECT COUNT(DISTINCT user_id) FROM favourites WHERE blog_id = $1", [blog_id]);
+        return result.rows;
+    }catch(err){
+        throw err;
     }
 }

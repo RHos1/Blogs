@@ -1,6 +1,8 @@
 {
-  "/blog/[id]/page": "app/blog/[id]/page.js",
-  "/dashboard/blogs/page": "app/dashboard/blogs/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
-  "/dashboard/Login/page": "app/dashboard/Login/page.js"
+  "/dashboard/addBlog/page": "app/dashboard/addBlog/page.js",
+  "/dashboard/favourites/page": "app/dashboard/favourites/page.js",
+  "/dashboard/Login/page": "app/dashboard/Login/page.js",
+  "/dashboard/blogs/page": "app/dashboard/blogs/page.js"
 }

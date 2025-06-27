@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors'; 
-import {addBlog,getBlog,addUser,findUser,findBlog,renderBlog,Favourite,getFavourites,deleteBlog,addComment,getComment,getCommentNumber,getLikes} from '../Database/postgres.js'
+import {addBlog,getBlog,addUser,findUser,findBlog,renderBlog,Favourite,getFavourites,deleteBlog,addComment,getComment,getCommentNumber,getLikes, createdBlogs} from '../Database/postgres.js'
 import session from 'express-session'
 import { RESPONSE_LIMIT_DEFAULT } from 'next/dist/server/api-utils/index.js';
 
@@ -54,6 +54,7 @@ app.post('/logout', (req,res) => {
         return res.status(200).send('Logged out successfully.');
     });
 });
+
 app.get('/getBlogs', async (req,res) => {
     try{
         const data = await getBlog();
@@ -239,6 +240,19 @@ app.post('/api/likes', async(req,res) => {
     catch(err){
         console.error("This is the error",err);
         res.status(500).send("Error with retrieving like count");
+    }
+})
+
+app.post('/api/created', async(req,res) => {
+    try{
+        const {username} = req.body;
+        const result = await createdBlogs(username);
+        res.status(200).json(result);
+
+    }catch(err){
+        console.error("Error cause", err);
+        res.status(500).send('There was an error with retrieving this data');
+
     }
 })
 

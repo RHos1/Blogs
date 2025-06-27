@@ -34,7 +34,7 @@ export default function Navigator() {
                         <Link href="dashboard/favourites">Favourites</Link>
                         </div>
                         <div className="w-30 h-7">
-                            <h1>My Blogs</h1>
+                            <Link href="dashboard/myBlogs">My Blogs</Link>
                         </div>
                         <div className="w-30 h-7">
                             <h1>Logout</h1>

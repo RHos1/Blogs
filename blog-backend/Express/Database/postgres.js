@@ -159,3 +159,12 @@ export async function getLikes(blog_id){
         throw err;
     }
 }
+
+export async function createdBlogs(username){
+    try{
+        const result = await client.query("SELECT * FROM blogs WHERE username = $1", [username]);
+        return result.rows;
+    }catch(err){
+        throw err;
+    }
+}

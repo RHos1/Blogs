@@ -356,9 +356,6 @@
   .h-\[16rem\] {
     height: 16rem;
   }
-  .h-\[18rem\] {
-    height: 18rem;
-  }
   .h-\[20rem\] {
     height: 20rem;
   }
@@ -367,9 +364,6 @@
   }
   .w-5\/8 {
     width: calc(5/8 * 100%);
-  }
-  .w-6 {
-    width: calc(var(--spacing) * 6);
   }
   .w-10 {
     width: calc(var(--spacing) * 10);

@@ -1,6 +1,7 @@
 
 "use client"
 import {useEffect,useState} from 'react';
+import {useParams} from 'next/navigation';
 import Navigation from "@/app/Components/navigation";
 
 type User = {
@@ -272,16 +273,19 @@ export default function BlogPage({ params }: BlogPageProps) {
                 </div>
                 <p className="text-3xl font-[400]">{blog.blog_content}</p>
 
+                
                 <h1 className="text-3xl font-[500]">Comments</h1>
+
+                {comments.map((comment)=>{
+                    return(<div key={comment.comment_id}><p className="text-2xl font-[400]">{comment.username}</p><p className="text-2xl font-[400]">{comment.comment_text}</p></div>)
+                })}
 
                 <form onSubmit={handleComment} className="flex flex-col">
                     <input type="text" className="border-2 w-120 h-10 pl-2 mb-2" name="comment_text" onChange={changeComment} value={comment.comment_text} placeholder="Add a comment"></input>
-                    <button type="submit" className="border-2 rounded-xl w-50">Add</button>
+                    <button type="submit" className="border-2 rounded-2xl w-30 h-8 font-[400] text-xl">Add</button>
                 </form>
 
-                {comments.map((comment)=>{
-                    return(<div key={comment.comment_id}>{comment.comment_text}</div>)
-                })}
+                
 
 
                 <section className="flex flex-row gap-20" id="stats">

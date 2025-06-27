@@ -27,6 +27,9 @@ export default function Login(){
             })
             const message = await response.text();
             alert(message);
+            if (response.ok){
+                window.location.href= '/dashboard/blogs';
+            }
 
 
         }catch(err){
